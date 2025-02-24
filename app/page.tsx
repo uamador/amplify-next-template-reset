@@ -7,13 +7,43 @@ import "./../app/app.css";
 import { Amplify } from "aws-amplify";
 import outputs from "@/amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
+import { useAIGeneration} from "@/app/client";
 
-Amplify.configure(outputs);
+
+import {
+    Button,
+    Flex,
+    Heading,
+    Loader,
+    Text,
+    TextAreaField,
+    View,
+} from "@aws-amplify/ui-react";
+
+import React from "react";
 
 const client = generateClient<Schema>();
 
 export default function App() {
-  const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+    useEffect(() => {
+        Amplify.configure(outputs);
+    }, []);
+
+const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+
+const [{data, isLoading, hasError}, Tellme] = useAIGeneration("Tellme");
+
+
+    const handleClick = async () => {
+        try {
+            const response = await Tellme({
+                content: "Hello"
+            });
+            console.log('AI Response:', response);
+        } catch (err) {
+            console.error('Error:', err);
+        }
+    };
 
   function listTodos() {
     client.models.Todo.observeQuery().subscribe({
@@ -31,9 +61,8 @@ export default function App() {
     });
 
    }
-    const askAI = async () => { const response = await client.generations.Tellme({ content: "Hello" });}
 
-  return (
+    return (
     <main>
       <h1>My todos</h1>
       <button onClick={createTodo}>+ new</button>
@@ -50,7 +79,7 @@ export default function App() {
         </a>
       </div>
         <div>
-            <button onClick={askAI}>Ask About Toronto</button>
+            <Button onClick={handleClick}>Tell Me Function</Button>
         </div>
     </main>
   );
