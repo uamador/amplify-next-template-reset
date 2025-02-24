@@ -29,7 +29,9 @@ export default function App() {
     client.models.Todo.create({
       content: window.prompt("Todo content"),
     });
-  }
+
+   }
+    const askAI = async () => { const response = await client.generations.Tellme({ content: "Tell me about Toronto" });}
 
   return (
     <main>
@@ -47,6 +49,9 @@ export default function App() {
           Review next steps of this tutorial.
         </a>
       </div>
+        <div>
+            <button onClick={askAI}>Ask About Toronto</button>
+        </div>
     </main>
   );
 }
