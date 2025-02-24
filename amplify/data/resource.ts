@@ -15,7 +15,7 @@ const schema = a.schema({
 
   Tellme: a.generation({
         aiModel: a.ai.model("Claude 3 Haiku"),
-        systemPrompt: `You are a helpful assistant will give the user a great summary about the City of Toronto`,
+        systemPrompt: `You are a helpful assistant will give the user a great summary about the City of Toronto no matter what the user types. Use no more than two lines of text.`,
       })
       .arguments({
         content: a.string(),

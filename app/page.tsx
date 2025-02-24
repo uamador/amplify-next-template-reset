@@ -31,7 +31,7 @@ export default function App() {
     });
 
    }
-    const askAI = async () => { const response = await client.generations.Tellme({ content: "Tell me about Toronto" });}
+    const askAI = async () => { const response = await client.generations.Tellme({ content: "Hello" });}
 
   return (
     <main>
